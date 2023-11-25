@@ -1,17 +1,20 @@
 package com.example.alquileres.service;
 
+import com.example.alquileres.dto.AlquilerResponseDto;
+import com.example.alquileres.dto.FinalizarAlquilerRequestDTO;
+import com.example.alquileres.dto.IniciarAlquilerRequestDTO;
 import com.example.alquileres.model.Alquiler;
 
 import java.util.List;
 
 public interface AlquilerService {
 
-    void iniciarAlquiler(Integer idEstacion, String idCliente);
+    AlquilerResponseDto iniciarAlquiler(IniciarAlquilerRequestDTO requestDto);
 
-    void finalizarAlquiler(Integer idAlquiler, Integer idEstacionDevolucion, String monedaDeseada);
+    AlquilerResponseDto finalizarAlquiler(FinalizarAlquilerRequestDTO requestDto);
 
-    List<Alquiler> obtenerAlquileresPorEstado(Integer estado);
+    List<AlquilerResponseDto> obtenerAlquileresPorEstado(Integer estado);
 
-    List<Alquiler> obtenerTodosLosAlquileres();
+    List<AlquilerResponseDto> obtenerTodosLosAlquileres();
 
 }

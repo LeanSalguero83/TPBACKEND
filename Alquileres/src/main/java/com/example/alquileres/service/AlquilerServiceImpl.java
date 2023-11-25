@@ -1,5 +1,9 @@
 package com.example.alquileres.service;
 
+import com.example.alquileres.dto.AlquilerResponseDto;
+import com.example.alquileres.dto.FinalizarAlquilerRequestDTO;
+import com.example.alquileres.dto.IniciarAlquilerRequestDTO;
+import com.example.alquileres.exceptions.*;
 import com.example.alquileres.model.Alquiler;
 import com.example.alquileres.model.Tarifa;
 import com.example.alquileres.repository.*;
@@ -28,13 +32,14 @@ public class AlquilerServiceImpl implements AlquilerService {
     IEstacionesApiClient estacionesApiClient;
     TarifaRepository tarifaRepository;
     ExchangeRateApiClient exchangeRateApiClient;
+    AlquilerResponseDtoMapper alquilerResponseDtoMapper;
     static final Logger logger = LoggerFactory.getLogger(AlquilerServiceImpl.class);
     @Transactional
-    public void iniciarAlquiler(Integer idEstacion, String idCliente) {
+    public AlquilerResponseDto iniciarAlquiler(IniciarAlquilerRequestDTO requestDto) {
         // Verificar que la estación existe
-        var estacion = estacionesApiClient.getEstacionById(idEstacion);
+        var estacion = estacionesApiClient.getEstacionById(requestDto.getIdEstacion());
         if (estacion == null) {
-            throw new IllegalStateException("La estación con ID " + idEstacion + " no existe.");
+            throw new EstacionRetiroNotFoundException("La estación con ID " + requestDto.getIdEstacion() + " no existe.");
         }
 
         // obtengo la tarifa en base a la fecha actual
@@ -55,47 +60,51 @@ public class AlquilerServiceImpl implements AlquilerService {
                         .orElse(null));
 
         if (tarifa == null) {
-            throw new IllegalStateException("No se encontró una tarifa adecuada para la fecha y hora actual.");
+            throw new TarifaNotFoundException("No se encontró una tarifa adecuada para la fecha y hora actual.");
         }
 
         // Crear un nuevo objeto alquiler con los datos de inicio y empiezo a setterlo.
         Alquiler alquiler = new Alquiler();
         alquiler.setId(identifierRepository.nextValue(Alquiler.TABLE_NAME));
-        alquiler.setIdCliente(idCliente);
+        alquiler.setIdCliente(requestDto.getIdCliente());
         alquiler.setEstado(1); // Estado "Iniciado"
-        alquiler.setEstacionRetiro(idEstacion);
+        alquiler.setEstacionRetiro(requestDto.getIdEstacion());
         alquiler.setFechaHoraRetiro(java.time.LocalDateTime.now());
         alquiler.setTarifa(tarifa);
         // Los campos de devolución y monto se dejan nulos, se actualizarán al finalizar el alquiler.
 
         // Guardar el nuevo alquiler
         alquilerRepository.save(alquiler);
+
+        return alquilerResponseDtoMapper.apply(alquiler);
+
+
     }
 
     @Transactional
-    public void finalizarAlquiler(Integer idAlquiler, Integer idEstacionDevolucion, String monedaDeseada) {
-        logger.info("Iniciando el proceso de finalizar alquiler para el id: {}", idAlquiler);
+    public AlquilerResponseDto finalizarAlquiler(FinalizarAlquilerRequestDTO requestDto) {
+        logger.info("Iniciando el proceso de finalizar alquiler para el id: {}", requestDto.getIdAlquiler());
 
 
         // Obtener alquiler
-        Alquiler alquiler = alquilerRepository.findById(idAlquiler)
-                .orElseThrow(() -> new IllegalStateException("Alquiler no encontrado"));
+        Alquiler alquiler = alquilerRepository.findById(requestDto.getIdAlquiler())
+                .orElseThrow(() -> new AlquilerNotFoundException("Alquiler no encontrado"));
 
         logger.info("Alquiler obtenido para el id: {}", alquiler.getId());
 
         // Verificar estado del alquiler
         if (alquiler.getEstado() == 2) {
-            throw new IllegalStateException("El alquiler ya ha sido finalizado.");
+            throw new AlquilerNotFoundException("El alquiler ya ha sido finalizado.");
         }
 
         // Obtener estación de retiro y devolución
         var estacionRetiro = estacionesApiClient.getEstacionById(alquiler.getEstacionRetiro());
         if (estacionRetiro == null) {
-            throw new IllegalStateException("La estación de retiro con ID " + alquiler.getEstacionRetiro() + " no existe.");
+            throw new EstacionRetiroNotFoundException("La estación de retiro con ID " + alquiler.getEstacionRetiro() + " no existe.");
         }
-        var estacionDevolucion = estacionesApiClient.getEstacionById(idEstacionDevolucion);
+        var estacionDevolucion = estacionesApiClient.getEstacionById(requestDto.getIdEstacionDevolucion());
         if (estacionDevolucion == null) {
-            throw new IllegalStateException("La estación de devolución con ID " + idEstacionDevolucion + " no existe.");
+            throw new EstacionDevolucionNotFoundException("La estación de devolución con ID " + requestDto.getIdEstacionDevolucion() + " no existe.");
         }
 
         // Calcular distancia
@@ -109,7 +118,7 @@ public class AlquilerServiceImpl implements AlquilerService {
         // Obtener la tarifa directamente del alquiler
         Tarifa tarifa = alquiler.getTarifa();
         if (tarifa == null) {
-            throw new IllegalStateException("No se ha asignado tarifa al alquiler con ID " + alquiler.getId());
+            throw new TarifaNoAsignadaException("No se ha asignado tarifa al alquiler con ID " + alquiler.getId());
         }
 
         // Calcular monto total
@@ -124,19 +133,19 @@ public class AlquilerServiceImpl implements AlquilerService {
 
 
         // Convertir moneda si es necesario
-        if (monedaDeseada != null && !monedaDeseada.isEmpty()) {
+        if (requestDto.getMonedaDeseada() != null && !requestDto.getMonedaDeseada().isEmpty()) {
             try {
-                montoTotal = convertirMoneda(montoTotal, "ARS", monedaDeseada);
-                logger.info("Monto convertido para el alquiler id: {} en moneda {}: {}", alquiler.getId(), monedaDeseada, montoTotal);
+                montoTotal = convertirMoneda(montoTotal, "ARS", requestDto.getMonedaDeseada());
+                logger.info("Monto convertido para el alquiler id: {} en moneda {}: {}", alquiler.getId(), requestDto.getMonedaDeseada(), montoTotal);
             } catch (IllegalStateException e) {
                 logger.error("Error al convertir la moneda para el alquiler id: {}", alquiler.getId(), e);
-                throw new IllegalStateException("No se pudo convertir la moneda: " + e.getMessage());
+                throw new MonedaConversionException("No se pudo convertir la moneda: " + e.getMessage());
             }
         }
 
         // Actualizar alquiler
         alquiler.setEstado(2); // Estado "Finalizado"
-        alquiler.setEstacionDevolucion(idEstacionDevolucion);
+        alquiler.setEstacionDevolucion(requestDto.getIdEstacionDevolucion());
         alquiler.setFechaHoraDevolucion(LocalDateTime.now());
         alquiler.setMonto(montoTotal);
 
@@ -144,19 +153,30 @@ public class AlquilerServiceImpl implements AlquilerService {
         alquilerRepository.save(alquiler);
         logger.info("Alquiler finalizado y guardado con id: {}", alquiler.getId());
 
+        return  alquilerResponseDtoMapper.apply(alquiler);
+
     }
 
     public double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
-        // Calcular distancia euclídea y convertir grados a metros
-        double latitudDistancia = Math.toRadians(lat2 - lat1);
-        double longitudDistancia = Math.toRadians(lon2 - lon1);
+        try {
+            // Validaciones de latitud y longitud
+            if(lat1 < -90 || lat1 > 90 || lat2 < -90 || lat2 > 90 || lon1 < -180 || lon1 > 180 || lon2 < -180 || lon2 > 180) {
+                throw new CalculoDistanciaException("Coordenadas geográficas inválidas proporcionadas.");
+            }
 
-        return Math.sqrt(Math.pow(latitudDistancia, 2) + Math.pow(longitudDistancia, 2)) * 110000;
+            double latitudDistancia = Math.toRadians(lat2 - lat1);
+            double longitudDistancia = Math.toRadians(lon2 - lon1);
+
+            // Cálculo de distancia (podría incluir lógica adicional o llamadas a servicios externos)
+            return Math.sqrt(Math.pow(latitudDistancia, 2) + Math.pow(longitudDistancia, 2)) * 110000;
+        } catch (Exception e) {
+            throw new CalculoDistanciaException("Error al calcular la distancia: " + e.getMessage());
+        }
     }
 
     public double calcularMontoTotal(LocalDateTime inicio, LocalDateTime fin, Tarifa tarifa, double distancia) {
         if (inicio == null || fin == null) {
-            throw new IllegalArgumentException("Las fechas de inicio y fin no pueden ser nulas");
+            throw new CalculoMontoException("Las fechas de inicio y fin no pueden ser nulas");
         }
         // Calcular tiempo de alquiler en minutos y horas
         long minutosTotales = ChronoUnit.MINUTES.between(inicio, fin);
@@ -177,7 +197,7 @@ public class AlquilerServiceImpl implements AlquilerService {
             Map<String, Object> rates = (Map<String, Object>) response.get("rates");
             Object tasaDeCambioObjeto = rates.get(monedaDeseada);
             if (tasaDeCambioObjeto == null) {
-                throw new IllegalStateException("Tasa de cambio no encontrada para la moneda: " + monedaDeseada);
+                throw new MonedaConversionException("Tasa de cambio no encontrada para la moneda: " + monedaDeseada);
             }
             double tasaDeCambio;
             if (tasaDeCambioObjeto instanceof Integer) {
@@ -185,34 +205,42 @@ public class AlquilerServiceImpl implements AlquilerService {
             } else if (tasaDeCambioObjeto instanceof Double) {
                 tasaDeCambio = (Double) tasaDeCambioObjeto;
             } else {
-                throw new IllegalStateException("Formato de tasa de cambio no esperado para la moneda: " + monedaDeseada);
+                throw new MonedaConversionException("Formato de tasa de cambio no esperado para la moneda: " + monedaDeseada);
             }
             return monto * tasaDeCambio;
         } catch (FeignException e) {
             logger.error("El servicio de conversión de moneda no está disponible en este momento", e);
-            throw new IllegalStateException("El servicio de conversión de moneda no está disponible en este momento", e);
+            throw new MonedaConversionException("El servicio de conversión de moneda no está disponible en este momento");
         } catch (Exception e) {
             logger.error("Ocurrió un error al realizar la conversión de moneda", e);
-            throw new IllegalStateException("Ocurrió un error al realizar la conversión de moneda", e);
+            throw new MonedaConversionException("Ocurrió un error al realizar la conversión de moneda");
         }
     }
 
 
-    public List<Alquiler> obtenerAlquileresPorEstado(Integer estado) {
+    public List<AlquilerResponseDto> obtenerAlquileresPorEstado(Integer estado) {
         // Verificar que el estado sea válido
         if (estado == null || (estado != 1 && estado != 2)) {
-            throw new IllegalArgumentException("El estado proporcionado no es válido.");
+            throw new EstadoNoValidoExcepction("El estado proporcionado no es válido.");
         }
 
         // Usar el repositorio para encontrar los alquileres con el estado dado
         List<Alquiler> alquileres = alquilerRepository.findByEstado(estado);
 
         // Devuelve la lista de alquileres filtrada por el estado
-        return alquileres;
+        return alquileres
+                .stream()
+                .map(alquilerResponseDtoMapper)
+                .toList();
     }
 
-    public List<Alquiler> obtenerTodosLosAlquileres() {
-        return alquilerRepository.findAll();
+    public List<AlquilerResponseDto> obtenerTodosLosAlquileres() {
+        List<Alquiler> alquileres = alquilerRepository.findAll();
+        return alquileres
+                .stream()
+                .map(alquilerResponseDtoMapper)
+                .toList();
+
     }
 
 
