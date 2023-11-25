@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "fc3086e4-3f44-4258-a3bb-604210eefd5a",
+		"name": "TPIFINAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24217425"
+	},
+	"item": [
+		{
+			"name": "GetAllEstaciones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVcExod3d4cWk2QnRYSWpaMjNZeEtjUmp6U1MwTC1pNGRjWVh6cWl6MVhrIn0.eyJleHAiOjE3MDAxNTI5MzMsImlhdCI6MTcwMDE1MjYzMywianRpIjoiZTdlYTFiYmUtMjQ4OC00ZTc2LTkyMzEtYjJjNDY1NDY0MTYzIiwiaXNzIjoiaHR0cHM6Ly9sYWJzeXMuZnJjLnV0bi5lZHUuYXIvYWltL3JlYWxtcy9iYWNrZW5kLXRwcyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI2MzBhMWM1Ny0wODQ4LTQwNjYtOGZmYi1mYmUyNTcxMTNkNDciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjbGllbnRlLXRwaSIsInNlc3Npb25fc3RhdGUiOiI1MWFiMjVhMS0yNjBiLTQ5MGEtYWI5Zi03MmIxMjhmYzJlZmMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtYmFja2VuZC10cHMiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiQ0xJRU5URSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoidHBpLXNjb3BlIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI1MWFiMjVhMS0yNjBiLTQ5MGEtYWI5Zi03MmIxMjhmYzJlZmMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlNlcmdpbyBMZWFuZHJvIFNhbGd1ZXJvIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiNDAzOTY4QHNpc3RlbWFzLmZyYy51dG4uZWR1LmFyIiwiZ2l2ZW5fbmFtZSI6IlNlcmdpbyBMZWFuZHJvIiwiZmFtaWx5X25hbWUiOiJTYWxndWVybyIsImVtYWlsIjoiNDAzOTY4QHNpc3RlbWFzLmZyYy51dG4uZWR1LmFyIiwiYXV0aG9yaXRpZXMiOlsiZGVmYXVsdC1yb2xlcy1iYWNrZW5kLXRwcyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJDTElFTlRFIl19.N5LbAif6DqXPFJlXaEQT2xsQyKyDUoFAUF1Yi8pnelsAp71HDoGfFAHv9GJ8457HZa7id7OTy9BR3OmcJfCQ_lXp9hkZ6k0LaOGY-N2yYiKqysBqnlcXZgrkdQf22cON0UK9HC_VdQwJVdxvh1wbvq6DGshBPbsYcTID8ag5UsBTqjD2PSnsGyRWeNqZ31qnrBJMgnesSBEcX2KnAmiSX1PJe5CW0s0RpE24FyCpEtebVmdaNYnTfiXCzmsqoZdfIkVCMajsignNhCxsvJg5djYRoLA5AgcR8dA4s2jIcovUapLG3O1BPVnQz7srMgz4PYRs8BnWR2DKid_oTh2PJg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8082/estaciones",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"estaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEstacionById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8082/estaciones/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"estaciones",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OBTENER TOKEN COMO ADMIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "cliente-tpi",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "ZmiMMce6zh4xKHde1FFKbfkiThDyYpyn",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "tpi-scope",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "grutpi-3",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "grutpi-3-2023#",
+							"type": "text"
+						},
+						{
+							"key": "Cookie",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://labsys.frc.utn.edu.ar/aim/realms/backend-tps/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"labsys",
+						"frc",
+						"utn",
+						"edu",
+						"ar"
+					],
+					"path": [
+						"aim",
+						"realms",
+						"backend-tps",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OBTENER TOKEN COMO CLIENTE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "cliente-tpi",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "ZmiMMce6zh4xKHde1FFKbfkiThDyYpyn",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "tpi-scope",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "403968@sistemas.frc.utn.edu.ar",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "403968-2023",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://labsys.frc.utn.edu.ar/aim/realms/backend-tps/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"labsys",
+						"frc",
+						"utn",
+						"edu",
+						"ar"
+					],
+					"path": [
+						"aim",
+						"realms",
+						"backend-tps",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCercana",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoQjJKUnZZVTEyT3FYelFscHBfVjlUei1YQ2REZkFfdHF6UUd3Q2hfYXI0In0.eyJleHAiOjE2OTk4Mjk2OTksImlhdCI6MTY5OTgyOTM5OSwiYXV0aF90aW1lIjoxNjk5ODI4NzcwLCJqdGkiOiIzMDdhZjUyOS00NmFjLTRkMGUtOTE5Yi1mNjA4M2E5Y2Q1MjgiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2FwcHNkZXZlbG9wZXJibG9nIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjA3MjQzNTc1LWUzMzctNDZmYi1hNzRlLTRhMjNlM2NlMDgzMiIsInR5cCI6IkJlYXJlciIsImF6cCI6InBob3RvLWFwcC1jb2RlLWZsb3ctY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjBiNDNiMmQ5LWNkNTEtNDE2Ni04OTc1LWMwNjZlYjdlODMxNiIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLWFwcHNkZXZlbG9wZXJibG9nIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsIkNsaWVudGUiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiMGI0M2IyZDktY2Q1MS00MTY2LTg5NzUtYzA2NmViN2U4MzE2IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTGVhbmRybyBTYWxndWVybyIsInByZWZlcnJlZF91c2VybmFtZSI6ImxlYW5kcm8iLCJnaXZlbl9uYW1lIjoiTGVhbmRybyIsImZhbWlseV9uYW1lIjoiU2FsZ3Vlcm8ifQ.RnYkKXjZuBxHHB5_pZkvBdFp4RnTXXdd60lknrtnsd6ufpSQTDZp8K8rZioX0L6dNfBcgyLuUbQrICs5VLMD_X9gON8-nrnnZFK0GkGVHM4jej9BYlHkNWrar1AK81xAlNJzcId5ph6jQxR-ZgWCRaJbnoe5y7n8QQIRguS6ZqkA_XZpmClFy87AtzglcBayh7u5eDAfOjCWdw77QdkjT_6Roxjghn9IHe_1faRqAkNtWq1yM6wbA6KwTcJAzVx53r5CDkPISGB8wIXrBdmha58qH44jFavfkjLpidTvuMoY4U3tdfcqRPOyPDpdA-Md2KWnSY-3IyMnIbcWDD9Npg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8082/estaciones/cercana?latitud=-31.44&longitud=-64.19",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"estaciones",
+						"cercana"
+					],
+					"query": [
+						{
+							"key": "latitud",
+							"value": "-31.44"
+						},
+						{
+							"key": "longitud",
+							"value": "-64.19"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IniciarAlquileres",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/api/alquileres/iniciar?idEstacion=1&idCliente=1&idTarifa=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"alquileres",
+						"iniciar"
+					],
+					"query": [
+						{
+							"key": "idEstacion",
+							"value": "1"
+						},
+						{
+							"key": "idCliente",
+							"value": "1"
+						},
+						{
+							"key": "idTarifa",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FinalizarAlquiler",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/api/alquileres/finalizar?idAlquiler=5&idEstacionDevolucion=2&monedaDeseada=USD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"alquileres",
+						"finalizar"
+					],
+					"query": [
+						{
+							"key": "idAlquiler",
+							"value": "5"
+						},
+						{
+							"key": "idEstacionDevolucion",
+							"value": "2"
+						},
+						{
+							"key": "monedaDeseada",
+							"value": "USD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addEstacion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoQjJKUnZZVTEyT3FYelFscHBfVjlUei1YQ2REZkFfdHF6UUd3Q2hfYXI0In0.eyJleHAiOjE2OTk4MzA5ODgsImlhdCI6MTY5OTgzMDY4OCwiYXV0aF90aW1lIjoxNjk5ODMwNjcwLCJqdGkiOiJmOTdmNGU3Mi01ZGY4LTQxZDYtYmZhZC1lM2VjZGQ1ZTk0NTIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2FwcHNkZXZlbG9wZXJibG9nIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjU1Zjc1ODY4LTIyYzctNGU2Yi1iODEwLTllZjQ5YTFjNmVlNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InBob3RvLWFwcC1jb2RlLWZsb3ctY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImZlZDRkOTg1LTQyMjEtNDhmZS05MGI4LTIxNDE1MjE0YmFhNiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLWFwcHNkZXZlbG9wZXJibG9nIiwiQWRtaW5pc3RyYWRvciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJDbGllbnRlIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInNpZCI6ImZlZDRkOTg1LTQyMjEtNDhmZS05MGI4LTIxNDE1MjE0YmFhNiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkRhbmkgTG9wZSIsInByZWZlcnJlZF91c2VybmFtZSI6ImRhbmlsb3BlIiwiZ2l2ZW5fbmFtZSI6IkRhbmkiLCJmYW1pbHlfbmFtZSI6IkxvcGUiLCJlbWFpbCI6ImxzYWxndWVybzEyM0BnbWFpbC5jb20ifQ.dcsyTjOjjCFy_XFrOnIuavE0EidzlnXU9FYdEb-7MXVMo8x146ctGOK3p2PzyWnrXWndYP7mbrQK2cpmQDldZ9glju5iQJLy35q_SjFL_CiavzthUXjH53slGHVaSZ9Q-HiqmRkAyNqNAjkPeM9BW0xWo7M3pt2ydTYCkHU8HNdeL6t0kS9Ne14nyKmXADBdwYj80C-JDuU8MHaSYE2bUn3eIB84MzhbdRfnrAcqYHEzgqAFwXkKFNWzCdKHl8t9G3aHSCOhbzgs7BJjeeS3aPOewx0vCGY-04rpA55p2nccUeJLWZZGaQXXs4tg0jpCbX18EVJIkCA1HP4XA--eww",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"nombre\": \"Hopiness\",\r\n    \"latitud\": -30.389057292916398,\r\n    \"longitud\": -69.17237351083637\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/estaciones",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"estaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAlquileres",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVcExod3d4cWk2QnRYSWpaMjNZeEtjUmp6U1MwTC1pNGRjWVh6cWl6MVhrIn0.eyJleHAiOjE3MDAxNTM2NzEsImlhdCI6MTcwMDE1MzM3MSwianRpIjoiNDkyNzc1MzUtZmU3ZS00M2JhLTkwYzMtZjNhNzA0NDRkODRhIiwiaXNzIjoiaHR0cHM6Ly9sYWJzeXMuZnJjLnV0bi5lZHUuYXIvYWltL3JlYWxtcy9iYWNrZW5kLXRwcyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJhZTYzYWMxYy0wMjJmLTQ5MjgtODY0Yi00OWIzZjkxMDNiZDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjbGllbnRlLXRwaSIsInNlc3Npb25fc3RhdGUiOiI3Mjk3ZmVmNS1kY2FhLTRhZTUtYTBjZi04ZTkyY2MwN2RmMmQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOSVNUUkFET1IiLCJkZWZhdWx0LXJvbGVzLWJhY2tlbmQtdHBzIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoidHBpLXNjb3BlIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI3Mjk3ZmVmNS1kY2FhLTRhZTUtYTBjZi04ZTkyY2MwN2RmMmQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ3J1dHBpLTMiLCJnaXZlbl9uYW1lIjoiIiwiZmFtaWx5X25hbWUiOiIiLCJhdXRob3JpdGllcyI6WyJBRE1JTklTVFJBRE9SIiwiZGVmYXVsdC1yb2xlcy1iYWNrZW5kLXRwcyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0.Tbbgsxtw9AMm3X9q1nGnFGJmnI6ClIWkqqGXhdwLjnrX8RgrPasUnh9dIo0thi0yk9SdPGqTSYul3CW8IhOZyWogOoUxki9SjjjSNY82HKw64FGXk2SsKSq_Q100P3hgCFFiiHH6lZYoi2fWZMGEZJCzFe0JS70YS4KY3wJ6YxIInOMcyuFL8FMznXJFG57ob-OQTIbMLJU5dbfzzwlykg7tO-WU_Pgf8BDk-uAak0GY6vKb39HRVir55zboN_V2pR-jxWDfI4qiYmW8I7v2oDDq3XrbV5oI1zhpqF3QSda-GOfhDdI63PQLbiysNv6Yttd3iFNFESMGT4eIIYPs7A"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/api/alquileres",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"alquileres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAlquilerByEstado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVcExod3d4cWk2QnRYSWpaMjNZeEtjUmp6U1MwTC1pNGRjWVh6cWl6MVhrIn0.eyJleHAiOjE3MDAxNTM2NzEsImlhdCI6MTcwMDE1MzM3MSwianRpIjoiNDkyNzc1MzUtZmU3ZS00M2JhLTkwYzMtZjNhNzA0NDRkODRhIiwiaXNzIjoiaHR0cHM6Ly9sYWJzeXMuZnJjLnV0bi5lZHUuYXIvYWltL3JlYWxtcy9iYWNrZW5kLXRwcyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJhZTYzYWMxYy0wMjJmLTQ5MjgtODY0Yi00OWIzZjkxMDNiZDkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjbGllbnRlLXRwaSIsInNlc3Npb25fc3RhdGUiOiI3Mjk3ZmVmNS1kY2FhLTRhZTUtYTBjZi04ZTkyY2MwN2RmMmQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFETUlOSVNUUkFET1IiLCJkZWZhdWx0LXJvbGVzLWJhY2tlbmQtdHBzIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoidHBpLXNjb3BlIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI3Mjk3ZmVmNS1kY2FhLTRhZTUtYTBjZi04ZTkyY2MwN2RmMmQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ3J1dHBpLTMiLCJnaXZlbl9uYW1lIjoiIiwiZmFtaWx5X25hbWUiOiIiLCJhdXRob3JpdGllcyI6WyJBRE1JTklTVFJBRE9SIiwiZGVmYXVsdC1yb2xlcy1iYWNrZW5kLXRwcyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0.Tbbgsxtw9AMm3X9q1nGnFGJmnI6ClIWkqqGXhdwLjnrX8RgrPasUnh9dIo0thi0yk9SdPGqTSYul3CW8IhOZyWogOoUxki9SjjjSNY82HKw64FGXk2SsKSq_Q100P3hgCFFiiHH6lZYoi2fWZMGEZJCzFe0JS70YS4KY3wJ6YxIInOMcyuFL8FMznXJFG57ob-OQTIbMLJU5dbfzzwlykg7tO-WU_Pgf8BDk-uAak0GY6vKb39HRVir55zboN_V2pR-jxWDfI4qiYmW8I7v2oDDq3XrbV5oI1zhpqF3QSda-GOfhDdI63PQLbiysNv6Yttd3iFNFESMGT4eIIYPs7A"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/api/alquileres/estado/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"alquileres",
+						"estado",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
